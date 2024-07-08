@@ -21,7 +21,7 @@ class AuthController extends Controller
         ];
 
         if(! $token = auth()->attempt($credentials)){
-            return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+            return response()->json(['error' => 'Email or Password is invalid'], Response::HTTP_UNAUTHORIZED);
         }
 
         $accessTokenCookie = cookie('access_token', $token, auth()->factory()->getTTL() * 2);

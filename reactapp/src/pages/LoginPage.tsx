@@ -1,13 +1,18 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { login } from "../services/AuthService";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 type Inputs = {
     email: string,
     password: string
 }
+
 function LoginPage() {
     const { register, handleSubmit, formState: {errors}} = useForm<Inputs>();
-    const onLogin:SubmitHandler<Inputs> = (payload) =>{
-        login(payload)
+    const navigate = useNavigate();
+    const onLogin:SubmitHandler<Inputs> = async (payload) =>{
+        const isLoged = await login(payload)
+        isLoged && navigate('/dashboard')
     };
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -49,6 +54,7 @@ function LoginPage() {
                     </p>
                 </form>
             </div>
+            
         </div>
     );
 }
