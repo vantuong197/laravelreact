@@ -3,6 +3,9 @@ import { login } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../contexts/ToastContext";
 import { SUCCESS } from "../configs/globalVariable";
+import { Button } from "../components/ui/button";
+import { ReloadIcon } from "@radix-ui/react-icons"
+import { useState } from "react";
 type Inputs = {
     email: string,
     password: string
@@ -11,12 +14,20 @@ type Inputs = {
 function LoginPage() {
     const { setMessage } = useToast();
     const { register, handleSubmit, formState: {errors}} = useForm<Inputs>();
+    const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
     const onLogin:SubmitHandler<Inputs> = async (payload) =>{
-        const isLoged = await login(payload)
-        if(isLoged){
-            setMessage("Login successfully", SUCCESS);
-            navigate('/dashboard')
+        setLoading(loading => !loading)
+        try {
+            const isLoged = await login(payload)
+            if(isLoged){
+                setMessage("Login successfully", SUCCESS);
+                navigate('/dashboard')
+            }
+        } catch (error) {
+            console.log(error)
+        }finally{
+            setLoading(loading => !loading)
         }
     };
     return (
@@ -51,7 +62,10 @@ function LoginPage() {
                     </div>
 
                     <div className="mb-6">
-                        <button className="w-full bg-blue-500 text-white font-bold hover:bg-blue-700 rounded-xl p-2" type="submit">Login</button>
+                        <Button className="w-full bg-blue-500 text-white font-bold hover:bg-blue-700 rounded-xl p-2" type="submit" disabled={loading}>
+                            {loading ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : null}
+                            {loading ? 'Login processing' : 'Login'}
+                        </Button>
                     </div>
 
                     <p className="text-left text-blue-700">

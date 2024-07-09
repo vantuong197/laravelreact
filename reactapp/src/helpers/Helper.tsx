@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { ToastType } from "../contexts/ToastContext";
-
+import { SUCCESS, WARNING, ERROR } from "../configs/globalVariable";
 
 export const showNotify = (
     message: string,
@@ -9,13 +9,13 @@ export const showNotify = (
 ) => {
     if(message){
         switch(type){
-            case 'success':
+            case SUCCESS:
                 toast.success(message)
                 break
-            case 'warning':
+            case WARNING:
                 toast.warning(message)
                 break
-            case 'error':
+            case ERROR:
                 toast.warning(message)
                 break;
             default:
