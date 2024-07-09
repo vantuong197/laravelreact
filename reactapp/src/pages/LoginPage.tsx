@@ -1,18 +1,23 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { login } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useToast } from "../contexts/ToastContext";
+import { SUCCESS } from "../configs/globalVariable";
 type Inputs = {
     email: string,
     password: string
 }
 
 function LoginPage() {
+    const { setMessage } = useToast();
     const { register, handleSubmit, formState: {errors}} = useForm<Inputs>();
     const navigate = useNavigate();
     const onLogin:SubmitHandler<Inputs> = async (payload) =>{
         const isLoged = await login(payload)
-        isLoged && navigate('/dashboard')
+        if(isLoged){
+            setMessage("Login successfully", SUCCESS);
+            navigate('/dashboard')
+        }
     };
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
