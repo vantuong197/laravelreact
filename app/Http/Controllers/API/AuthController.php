@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\UserResource;
 class AuthController extends Controller
 {
     public function __construct()
@@ -23,15 +24,16 @@ class AuthController extends Controller
         if(! $token = auth()->attempt($credentials)){
             return response()->json(['error' => 'Email or Password is invalid'], Response::HTTP_UNAUTHORIZED);
         }
-
+        $user = auth()->user();
         $accessTokenCookie = cookie('access_token', $token, auth()->factory()->getTTL() * 2);
 
-        return $this->respondWithToken($token)->withCookie($accessTokenCookie);
+        return $this->respondWithToken($token, $user)->withCookie($accessTokenCookie);
     }
 
-    protected function respondWithToken($token){
+    protected function respondWithToken($token, $user){
         return response()->json([
             'access_token' => $token,
+            'user' => new UserResource($user),
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 2
         ]);

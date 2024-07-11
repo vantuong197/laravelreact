@@ -6,8 +6,12 @@ import DashboardPage from "./pages/DashboardPage.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { ToastProvider } from "./contexts/ToastContext.tsx";
+import { store } from './redux/store'
+import { Provider } from "react-redux";
+import DashboardLayout from "./components/DashboardLayout.tsx";
+import AuthMidleware from "./middleware/AuthMiddleware.tsx";
 import 'react-toastify/dist/ReactToastify.css';
+
 
 const router = createBrowserRouter([
     {
@@ -15,20 +19,29 @@ const router = createBrowserRouter([
         element: <LoginPage />,
     },
     {
-        path: "/user",
-        element: <UserPage />,
-    },
-    {
-        path: "/dashboard",
-        element: <DashboardPage />,
+        path: "/",
+        element: (
+            <AuthMidleware>
+                <DashboardLayout />
+            </AuthMidleware>
+        ),
+        children: [
+            {
+                path: '/dashboard',
+                element: <DashboardPage />
+            },
+            {
+                path: '/user',
+                element: <UserPage />
+            }
+        ]
     },
 ]);
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <ToastProvider>
+        <Provider store={ store }>
             <RouterProvider router={router} />
             <ToastContainer />
-        </ToastProvider>
-        
+        </Provider>
     </React.StrictMode>
 );

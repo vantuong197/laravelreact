@@ -1,12 +1,16 @@
 import { toast } from "react-toastify";
-import { ToastType } from "../contexts/ToastContext";
 import { SUCCESS, WARNING, ERROR } from "../configs/globalVariable";
+import { clearToast } from "../redux/slice/toastSlice";
+import { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 
+
+type ToastType = typeof SUCCESS | typeof WARNING | typeof ERROR | null;
 export const showNotify = (
     message: string,
     type: ToastType,
-    setMessage: (message: string, type?: ToastType)=>void
+    dispatch: Dispatch<UnknownAction>
 ) => {
+    
     if(message){
         switch(type){
             case SUCCESS:
@@ -22,6 +26,6 @@ export const showNotify = (
                 break;
             
         }
-        setMessage('', null);
+        dispatch(clearToast())
     }
 }

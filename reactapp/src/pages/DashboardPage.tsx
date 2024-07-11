@@ -1,11 +1,13 @@
 
 import { useEffect } from "react";
-import { useToast } from "../contexts/ToastContext";
 import { showNotify } from "../helpers/Helper";
+import { RootState } from "../redux/store";
+import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux'
 function DashboardPage() {
-    const { message, type, setMessage } = useToast();
+    const {isAuthenticated, user} = useSelector((state: RootState) => state.auth);
     useEffect(() =>{
-        showNotify(message, type, setMessage)
+        console.log(isAuthenticated)
     }, [])
     return <>Dashboard page</>;
 }

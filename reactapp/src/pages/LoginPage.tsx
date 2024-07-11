@@ -1,27 +1,30 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { login } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "../contexts/ToastContext";
 import { SUCCESS } from "../configs/globalVariable";
 import { Button } from "../components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { useState } from "react";
+import { useDispatch } from 'react-redux'
+import { setToast } from "../redux/slice/toastSlice";
+import { setIsLogin } from "../redux/slice/authSlice";
 type Inputs = {
     email: string,
     password: string
 }
 
 function LoginPage() {
-    const { setMessage } = useToast();
     const { register, handleSubmit, formState: {errors}} = useForm<Inputs>();
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const onLogin:SubmitHandler<Inputs> = async (payload) =>{
         setLoading(loading => !loading)
         try {
-            const isLoged = await login(payload)
-            if(isLoged){
-                setMessage("Login successfully", SUCCESS);
+            const response = await login(payload)
+            if(response){
+                dispatch(setToast({message: "Login successfully", type: SUCCESS}))
+                dispatch(setIsLogin(response))
                 navigate('/dashboard')
             }
         } catch (error) {
