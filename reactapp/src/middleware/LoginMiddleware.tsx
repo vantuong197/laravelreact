@@ -10,29 +10,27 @@ import { setIsLogin } from '../redux/slice/authSlice';
 type ProtectedRouteProps = PropsWithChildren;
 
 
-const AuthMidleware = ({children}: ProtectedRouteProps) =>{
+const LoginMiddleware = ({children}: ProtectedRouteProps) =>{
     const {isAuthenticated, user} = useSelector((state: RootState) => state.auth);
+    
+    const [checkAuth, setcheckAuth] = useState<boolean>(false);
     const navigator = useNavigate();
     const dispatch = useDispatch();
     useEffect(() =>{
-        console.log(isAuthenticated)
         const checkAuthenticated = async () =>{
             if(!isAuthenticated || user === null){
                 const user = await getUser();
                 if(user){
                     dispatch(setIsLogin(user))
-                    
-                }else{
-                    dispatch(setToast({message: "You must login first!", type: ERROR}))
-                    navigator('/admin');
+                    navigator('/dashboard');
                 }
-                
             }
+            setcheckAuth(true);
         }
         checkAuthenticated();
     },  [])
     
-    return children;
+    return checkAuth ? children : null;
 }
 
-export default AuthMidleware;
+export default LoginMiddleware;

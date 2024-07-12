@@ -14,18 +14,6 @@ const DashboardLayout: React.FC = () =>{
         showNotify(message, type, dispatch);
     },[message, type])
 
-    useEffect(() =>{
-        const fetchUser = async () =>{
-            const user = await getUser();
-            console.log(user);
-            if(!user){
-                dispatch(setIsLogin(user))
-            }
-        }
-        fetchUser();
-        // const response  =  getUser();
-       
-    }, [])  
     return (
         <>
             Dashboard layout

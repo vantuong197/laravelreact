@@ -10,13 +10,18 @@ import { store } from './redux/store'
 import { Provider } from "react-redux";
 import DashboardLayout from "./components/DashboardLayout.tsx";
 import AuthMidleware from "./middleware/AuthMiddleware.tsx";
+import LoginMiddleware from "./middleware/LoginMiddleware.tsx";
 import 'react-toastify/dist/ReactToastify.css';
 
 
 const router = createBrowserRouter([
     {
         path: "/admin",
-        element: <LoginPage />,
+        element: (
+            <LoginMiddleware>
+                <LoginPage />
+            </LoginMiddleware>
+        )
     },
     {
         path: "/",
