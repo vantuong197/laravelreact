@@ -25,11 +25,16 @@ class AuthController extends Controller
             return response()->json(['error' => 'Email or Password is invalid'], Response::HTTP_UNAUTHORIZED);
         }
         $user = auth()->user();
-        $accessTokenCookie = cookie('access_token', $token, auth()->factory()->getTTL() * 2);
+        $accessTokenCookie = cookie('access_token', $token, auth()->factory()->getTTL() * 60);
 
         return $this->respondWithToken($token, $user)->withCookie($accessTokenCookie);
     }
 
+    public function me(){
+        return response()->json(
+            new UserResource(auth()->user())
+        );
+    }
     protected function respondWithToken($token, $user){
         return response()->json([
             'access_token' => $token,

@@ -16,7 +16,7 @@ type Inputs = {
 function LoginPage() {
     const { register, handleSubmit, formState: {errors}} = useForm<Inputs>();
     const [loading, setLoading] = useState<boolean>(false);
-    const navigate = useNavigate();
+    const navigator = useNavigate();
     const dispatch = useDispatch()
     const onLogin:SubmitHandler<Inputs> = async (payload) =>{
         setLoading(loading => !loading)
@@ -25,7 +25,7 @@ function LoginPage() {
             if(response){
                 dispatch(setToast({message: "Login successfully", type: SUCCESS}))
                 dispatch(setIsLogin(response))
-                navigate('/dashboard')
+                navigator('/dashboard')
             }
         } catch (error) {
             console.log(error)
