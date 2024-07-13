@@ -4,8 +4,9 @@ import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux'
 import { showNotify } from "../helpers/Helper";
-import { getUser } from '../services/AuthService';
-import { setIsLogin } from '../redux/slice/authSlice';
+import Header from './Header';
+import Aside from './Aside';
+import '../assets/scss/Style.scss'
 const DashboardLayout: React.FC = () =>{
     const {message, type} = useSelector((state: RootState) => state.toast);
     const dispatch = useDispatch()
@@ -15,10 +16,14 @@ const DashboardLayout: React.FC = () =>{
     },[message, type])
 
     return (
-        <>
-            Dashboard layout
-            <Outlet />
-        </>
+        <div className='page'>
+            {/* <Header /> */}
+            <Aside />
+            <div className='main-content'>
+                <Outlet />
+            </div>
+            
+        </div>
     )
 }
 export default DashboardLayout;
