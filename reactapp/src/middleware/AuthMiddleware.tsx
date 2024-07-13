@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ const AuthMidleware = ({children}: ProtectedRouteProps) =>{
     const navigator = useNavigate();
     const dispatch = useDispatch();
     useEffect(() =>{
-        console.log(isAuthenticated)
+        // console.log(isAuthenticated)
         const checkAuthenticated = async () =>{
             if(!isAuthenticated || user === null){
                 const user = await getUser();

@@ -24,13 +24,7 @@ class Jwt
                 $token = $request->cookie('access_token');
                 $request->headers->set('Authorization', 'Bearer ' . $token);
             }
-            if(!$token){
-                return response()->json(['message' => 'Token is invalid'], Response::HTTP_UNAUTHORIZED);
-            }
-            $user = auth()->userOrFail();
-            if(!$user){
-                return response()->json(['message' => 'User do not exists'], Response::HTTP_UNAUTHORIZED);
-            }
+           JWTAuth::parseToken()->authenticate();
 
         } catch (TokenExpiredException $e) {
             //throw $th;
