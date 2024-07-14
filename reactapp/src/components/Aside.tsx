@@ -25,7 +25,7 @@ const Aside: React.FC = () =>{
     }
     const defaultValueOpen = getOpenAccordionValue();
     return (
-        <aside className='app-aside w-60 h-full fixed bg-[#111c43]'>
+        <aside className='app-aside w-60 h-full fixed bg-[#111c43] top-0'>
             
             <div className="main-sidebar-header w-60 p-3.5 fixed z-10 h-14 text-center border-solid border-b border-menu-border text-[#a3aed1]">
                 <a href="" className='inline-block'>

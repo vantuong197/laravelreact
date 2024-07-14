@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { store } from './redux/store'
 import { Provider } from "react-redux";
-import DashboardLayout from "./components/DashboardLayout.tsx";
+import Layout from "./components/Layout.tsx";
 import AuthMidleware from "./middleware/AuthMiddleware.tsx";
 import LoginMiddleware from "./middleware/LoginMiddleware.tsx";
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         path: "/",
         element: (
             <AuthMidleware>
-                <DashboardLayout />
+                <Layout />
             </AuthMidleware>
         ),
         children: [

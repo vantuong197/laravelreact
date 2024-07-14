@@ -7,7 +7,7 @@ import { showNotify } from "../helpers/Helper";
 import Header from './Header';
 import Aside from './Aside';
 import '../assets/scss/Style.scss'
-const DashboardLayout: React.FC = () =>{
+const Layout: React.FC = () =>{
     const {message, type} = useSelector((state: RootState) => state.toast);
     const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ const DashboardLayout: React.FC = () =>{
 
     return (
         <div className='page'>
-            {/* <Header /> */}
+            <Header/>
             <Aside />
             <div className='main-content'>
                 <Outlet />
@@ -26,4 +26,4 @@ const DashboardLayout: React.FC = () =>{
         </div>
     )
 }
-export default DashboardLayout;
+export default Layout;
