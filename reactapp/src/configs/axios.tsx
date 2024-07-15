@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { User } from "../types/User";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000/api/auth',
+    baseURL: 'http://localhost:8000/api',
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',

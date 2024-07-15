@@ -9,7 +9,7 @@ type LoginPayload = {
 
 const login = async(payload:LoginPayload):Promise<User | null> =>{
     try {
-        const response = await axiosInstance.post('/login', {
+        const response = await axiosInstance.post('/auth/login', {
             email: payload.email,
             password: payload.password
         });
@@ -28,7 +28,7 @@ const logout = () => {
 const getUser = async ():Promise<User | null> =>{
 
     try {
-        const response = await axiosInstance.get('/me',{withCredentials: true});
+        const response = await axiosInstance.get('/auth/me',{withCredentials: true});
         return response.data;
     } catch (error) {
         console.log(error)

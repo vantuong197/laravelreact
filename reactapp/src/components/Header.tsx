@@ -21,7 +21,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 const Header: React.FC = () =>{
 
     return (
-        <header className='app-header h-14 fixed w-full content-center items-center top-0 bg-white'>
+        <header className='app-header h-14 fixed w-full content-center items-center top-0 bg-white absolute'>
             <div className="main-header mx-auto px-5 h-full flex items-center justify-between">
                 <HiOutlineBars3CenterLeft className='text-4xl cursor-pointer'/>
                 <div className="header-right-content flex justify-between items-center">

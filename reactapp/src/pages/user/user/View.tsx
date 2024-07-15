@@ -21,9 +21,44 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { pagination } from "../../../services/UserService";
+import { useQuery } from "react-query";
+import { LoadingSpinner } from "../../../components/ui/loading";
+import Pagivate from "../../../components/Paginate";
+import { useEffect, useState } from "react";
 const UserPage: React.FC = () => {
-    
+    interface Users  {
+        name: string,
+        phone: string | null,
+        image: string | null,
+        address: string | null,
+        birthday: string | null,
+        created_at: string | null,
+        description: string | null,
+        district_id: string | null,
+        email: string | null,
+        email_verified_at: string | null,
+        id: number,
+        province_id: string | null,
+        updated_at: string | null,
+        ward_id: string | null,
+    }
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const currentPage = searchParams.get('page') ? parseInt(searchParams.get('page')!) : 1
+    const [page, setPage] = useState<number | null>(currentPage);
+    const {data, isLoading, isError, error, refetch} = useQuery(['users', page], () => pagination(page), {
+        staleTime: 10000
+    });
+    const handlePagechange = (page:number | null) =>{
+        setPage(page);
+        navigate(`?page=${page}`)
+    }
+    useEffect(() =>{
+        setSearchParams({ page: currentPage.toString() })
+        refetch()
+    }, [page, refetch])
     return (
         <>
             <PageHeading breadcrumbProps={breadcrumbElement.Users}/>
@@ -51,25 +86,42 @@ const UserPage: React.FC = () => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                <TableRow>  
-                                <TableCell className="font-medium"><Checkbox /></TableCell>
-                                <TableCell className="font-medium">INV001</TableCell>
-                                <TableCell>Tuong Tran</TableCell>
-                                <TableCell>07000001234</TableCell>
-                                <TableCell>testemail@gmail.com</TableCell>
-                                <TableCell>Tachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpvTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo JpTachikawa Tokyo Jp</TableCell>
-                                <TableCell>Administrator</TableCell>
-                                <TableCell className="text-center"><Switch/></TableCell>
-                                <TableCell className="text-center flex justify-around">
-                                    <Link to='/user/update' ><FaRegEdit className="text-2xl"/></Link>
-                                    <Link to='/user/delete' ><MdDeleteOutline className="text-2xl text-[#ec4758]"/></Link>
-                                </TableCell>
-                                </TableRow>
+                                {isLoading ? (
+                                    <TableRow >  
+                                        <TableCell colSpan={9} className="font-medium text-center items-center">
+                                            <LoadingSpinner className='inline-block'/>
+                                        </TableCell>
+                                    </TableRow>
+                                ) : isError ? (
+                                    <TableRow >  
+                                        <TableCell colSpan={9} className="font-medium text-center items-center text-[#f00000]">     
+                                            An error occurred, please try again - Error Code: {error.response.status}
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                                 : data.users && data.users.map((user:Users) =>(
+                                    <TableRow key={user.id}>  
+                                    <TableCell className="font-medium"><Checkbox /></TableCell>
+                                    <TableCell className="font-medium">{user.id}</TableCell>
+                                    <TableCell>{user.name}</TableCell>
+                                    <TableCell>{user.phone ?? '-'}</TableCell>
+                                    <TableCell>{user.email}</TableCell>
+                                    <TableCell>{user.address ?? '-'}</TableCell>
+                                    <TableCell>Administrator</TableCell>
+                                    <TableCell className="text-center"><Switch/></TableCell>
+                                    <TableCell className="text-center flex justify-around">
+                                        <Link to='/user/update' ><FaRegEdit className="text-2xl"/></Link>
+                                        <Link to='/user/delete' ><MdDeleteOutline className="text-2xl text-[#ec4758]"/></Link>
+                                    </TableCell>
+                                    </TableRow>    
+                                ))}
+                                
                             </TableBody>
                         </Table>
                     </CardContent>
                     <CardFooter>
-                        <p>Card Footer</p>
+                        {(!isLoading && data.links.length) ? <Pagivate links={data.links} pageChange={handlePagechange}/> : null}
+                        
                     </CardFooter>
                 </Card>
             </div>

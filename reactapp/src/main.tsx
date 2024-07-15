@@ -11,6 +11,10 @@ import { Provider } from "react-redux";
 import Layout from "./components/Layout.tsx";
 import AuthMidleware from "./middleware/AuthMiddleware.tsx";
 import LoginMiddleware from "./middleware/LoginMiddleware.tsx";
+import {
+    QueryClient,
+    QueryClientProvider,
+  } from 'react-query'
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -42,11 +46,14 @@ const router = createBrowserRouter([
         ]
     },
 ]);
+const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById("root")!).render(
     // <React.StrictMode>
         <Provider store={ store }>
-            <RouterProvider router={router} />
-            <ToastContainer />
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+                <ToastContainer />
+            </QueryClientProvider>
         </Provider>
     // </React.StrictMode>
 );
