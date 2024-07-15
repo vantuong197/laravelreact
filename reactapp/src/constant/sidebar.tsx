@@ -32,11 +32,11 @@ export const sidebarItems = [
                 links:[
                     {
                         title: 'グループユーザ管理',
-                        to: '/user/catalogue'
+                        to: '/user/catalogue/index'
                     },
                     {
                         title: 'ユーザ管理',
-                        to: '/user'
+                        to: '/user/index'
                     }
                 ]
             }

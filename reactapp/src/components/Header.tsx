@@ -25,23 +25,23 @@ const Header: React.FC = () =>{
             <div className="main-header mx-auto px-5 h-full flex items-center justify-between">
                 <HiOutlineBars3CenterLeft className='text-4xl cursor-pointer'/>
                 <div className="header-right-content flex justify-between items-center">
-                    <div className="header-search">
+                    <div className="header-search ">
                         <Link to='/' className='header-link flex relative'>
-                        <IoIosSearch className='header-link-icon text-2xl'/>
+                        <IoIosSearch className='header-link-icon text-4xl'/>
                         </Link>
                     </div>
                     
                     <div className="cart-dropdown">
-                        <Link to='/' className='header-link flex relative'>
+                        <Link to='/' className='header-link flex relative '>
                             <FiShoppingCart className='header-link-icon'/>
-                            <span className='badge absolute top-[2px] right-[2px] text-[#922c88] w-[17px] h-[15px] text-center text-[9px] border rounded-[10px] border-fuchsia-900'>5</span>
+                            <span className='badge absolute top-[5px] right-[10px] text-[#922c88] w-[17px] h-[15px] text-center text-[9px] border rounded-[10px] border-fuchsia-900'>5</span>
                         </Link>
                     </div>
 
                     <div className="notification-dropdown">
                         <Link to='/' className='header-link flex relative'>
                             <GoBell className='header-link-icon'/>
-                            <span className='badge absolute top-[2px] right-[2px] text-[#922c88] w-[17px] h-[15px] text-center text-[9px] border rounded-[10px] border-fuchsia-900'>5</span>
+                            <span className='badge absolute top-[5px] right-[10px] text-[#922c88] w-[17px] h-[15px] text-center text-[9px] border rounded-[10px] border-fuchsia-900'>5</span>
                         </Link>
                     </div>
 

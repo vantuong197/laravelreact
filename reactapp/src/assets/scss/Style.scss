@@ -1,7 +1,10 @@
 .main-content{
     margin-left: 240px;
-    padding-left: 10px;
-    margin-top: 50px;
+    margin-top: 57px;
+    height: calc(100vh - 50vh);
+    .main-content__container{
+        padding: 0 15px;
+    }
 }
 
 body{

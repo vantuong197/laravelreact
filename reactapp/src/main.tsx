@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import LoginPage from "./pages/LoginPage.tsx";
-import UserPage from "./pages/UserPage.tsx";
+import UserPage from "./pages/user/user/View.tsx";
 import DashboardPage from "./pages/DashboardPage.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
                 element: <DashboardPage />
             },
             {
-                path: '/user',
+                path: '/user/index',
                 element: <UserPage />
             }
         ]

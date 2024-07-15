@@ -6,11 +6,16 @@
             padding: 1rem 0.65rem;
 
             .header-link-icon{
-                width: 15px;
-                height: 15px;
-                font-size: 1.25rem;
+                width: auto;
+                height: auto;
+                font-size: 1.3rem;
+                margin-right: 10px;
                 color: #536485;
+            }
+            .header-link-icon:hover{
+                color: #922c88;
             }
         }
     }
 }
+
