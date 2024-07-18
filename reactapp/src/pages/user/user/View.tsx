@@ -27,6 +27,7 @@ import { useQuery } from "react-query";
 import { LoadingSpinner } from "../../../components/ui/loading";
 import Pagivate from "../../../components/Paginate";
 import { useEffect, useState } from "react";
+import useColumnState from "../../../hooks/useColumnState";
 const UserPage: React.FC = () => {
     interface Users  {
         name: string,
@@ -44,6 +45,7 @@ const UserPage: React.FC = () => {
         updated_at: string | null,
         ward_id: string | null,
     }
+    
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const currentPage = searchParams.get('page') ? parseInt(searchParams.get('page')!) : 1
@@ -51,10 +53,20 @@ const UserPage: React.FC = () => {
     const {data, isLoading, isError, error, refetch} = useQuery(['users', page], () => pagination(page), {
         staleTime: 10000
     });
+
+
+    const { columnState,handleChecked, setInitialColumnState } = useColumnState();
     const handlePagechange = (page:number | null) =>{
         setPage(page);
         navigate(`?page=${page}`)
     }
+    
+    
+    useEffect(() =>{
+        if(!isLoading && data.users){
+            setInitialColumnState(data.users, 'publish')
+        }
+    }, [isLoading])
     useEffect(() =>{
         setSearchParams({ page: currentPage.toString() })
         refetch()
@@ -108,7 +120,9 @@ const UserPage: React.FC = () => {
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>{user.address ?? '-'}</TableCell>
                                     <TableCell>Administrator</TableCell>
-                                    <TableCell className="text-center"><Switch/></TableCell>
+                                    <TableCell className="text-center">
+                                        <Switch value={user.id} checked={columnState[user.id]?.publish} onCheckedChange={() => handleChecked(user.id, 'publish', 'users')} />
+                                    </TableCell>
                                     <TableCell className="text-center flex justify-around">
                                         <Link to='/user/update' ><FaRegEdit className="text-2xl"/></Link>
                                         <Link to='/user/delete' ><MdDeleteOutline className="text-2xl text-[#ec4758]"/></Link>

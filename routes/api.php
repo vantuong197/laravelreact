@@ -27,6 +27,7 @@ Route::group([
     'middleware' => 'jwt',
 ], function ($router) {
     Route::get('users', [UserController::class, 'index']);
+    Route::put('users/{id}/status', [UserController::class, 'updateStatusByField']);
 });
 
 Route::post('auth/login', [AuthController::class, 'login']);
