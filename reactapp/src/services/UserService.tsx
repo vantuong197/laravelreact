@@ -1,5 +1,9 @@
 import axiosInstance from "../configs/axios"
 import { handleAxiosError } from "../helpers/axiosHelper";
+import { User } from "../types/User";
+
+import { FaRegEdit } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
 interface Users  {
     name: string,
     phone: string | null,
@@ -21,5 +25,42 @@ const pagination = async (page: number | null):Promise<Users> =>{
     return response.data;
 }
 
+const model = 'users';
+const tableColumn = [
+    {
+        name: 'ID',
+        render: (item: User) =><span>{item.id}</span>
+    },
+    {
+        name: 'User Name',
+        render: (item: User) =><span>{item.name}</span>
+    },
+    {
+        name: 'Phone number',
+        render: (item: User) =><span>{item.phone}</span>
+    },
+    {
+        name: 'Email',
+        render: (item: User) =><span>{item.email}</span>
+    },
+    {
+        name: 'Address',
+        render: (item: User) =><span>{item.address ?? '-'}</span>
+    },
+    {
+        name: 'User Role',
+        render: (item: User) =><span>{'-'}</span>
+    }
+]
 
-export {pagination};
+const actions = [
+    {
+        path: '/user/update',
+        icon: <FaRegEdit className="text-2xl"/>
+    },
+    {
+        path: '/user/delete',
+        icon: <MdDeleteOutline className="text-2xl text-[#ec4758]"/>
+    }
+]
+export {pagination, model, tableColumn, actions};

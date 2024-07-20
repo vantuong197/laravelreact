@@ -10,7 +10,7 @@ interface UserState {
 
 interface useColumnStateReturn {
     columnState: UserState,
-    useColumnSate:(userId:string, columnName:string) => void,
+    handleChecked:(userId:number, columnName:string , model:string) => void,
     setInitialColumnState: (users:any[], columnName:string) => void
 }
 const useColumnState = ():useColumnStateReturn =>{

@@ -19,7 +19,7 @@ interface PaginationProps {
     pageChange: (page: number | null) => void
 }
 
-const Pagivate:React.FC<PaginationProps> = ({links, pageChange}) =>{
+const Paginate:React.FC<PaginationProps> = ({links, pageChange}) =>{
     const activeLinkIndex = links.findIndex(link => link.active);
     const filterLinks = links.filter((link, index) => (
         (index !== 0 && 
@@ -71,4 +71,4 @@ const Pagivate:React.FC<PaginationProps> = ({links, pageChange}) =>{
     )
 }
 
-export default Pagivate;
+export default Paginate;
