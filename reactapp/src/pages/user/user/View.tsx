@@ -14,6 +14,7 @@ import { useQuery } from "react-query";
 import Paginate from "../../../components/Paginate";
 import { useEffect, useState } from "react";
 import CustomizeTable from "../../../components/CustomizeTable";
+import Filter from "../../../components/Filter";
 
 const UserPage: React.FC = () => {
     
@@ -38,6 +39,7 @@ const UserPage: React.FC = () => {
     return (
         <>
             <PageHeading breadcrumbProps={breadcrumbElement.Users}/>
+            
             <div className="main-content__container">
                 <Card className='rounded-[5px] mt-[15px]'>
                     <CardHeader className='border-b border-solid border-[#f3f3f3] p-[20px]'>
@@ -45,6 +47,7 @@ const UserPage: React.FC = () => {
                         <CardDescription className='text-xs text-[#f00000]'>Use the filter function to filter data</CardDescription>
                     </CardHeader>
                     <CardContent className='p-[15px]'>
+                        <Filter />
                         <CustomizeTable 
                             isLoading={isLoading}
                             data={data}

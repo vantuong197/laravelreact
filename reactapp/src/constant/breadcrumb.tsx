@@ -5,7 +5,7 @@ export const breadcrumbElement = {
         route: '/user/index'
     },
     DashBoard : {
-        title: '総合管理',
+        title: 'Dashboar',
         route: '/dashboard'
     },
 }

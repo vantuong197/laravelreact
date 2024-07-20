@@ -10,11 +10,11 @@ export const sidebarItems = [
                 label: 'Dashboard',
                 links:[
                     {
-                        title: '総合管理',
+                        title: 'Dashboard',
                         to: '/dashboard'
                     },
                     {
-                        title: '注文管理',
+                        title: 'Order',
                         to: '/dashboard/order'
                     }
                 ]
@@ -31,11 +31,11 @@ export const sidebarItems = [
                 label: 'Users',
                 links:[
                     {
-                        title: 'グループユーザ管理',
+                        title: 'Group Users',
                         to: '/user/catalogue/index'
                     },
                     {
-                        title: 'ユーザ管理',
+                        title: 'Users',
                         to: '/user/index'
                     }
                 ]

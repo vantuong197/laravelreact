@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { LoadingSpinner } from "./ui/loading";
 import { useEffect } from "react";
 import useColumnState from "../hooks/useColumnState";
-import { IconType } from "react-icons/lib";
+import useCheckBoxState from "../hooks/useCheckBoxState";
 interface CustomizeTableProps {
     data: unknown,
     isLoading: boolean,
@@ -23,7 +23,7 @@ interface CustomizeTableProps {
 }
 const CustomizeTable = ({isLoading, data, isError, model, tableColumn, actions}:CustomizeTableProps) =>{
     const { columnState, handleChecked, setInitialColumnState } = useColumnState();
-    
+    const {handleCheckChange, checkAllState, checkState, handleCheckAllChange} = useCheckBoxState(data, model);
     useEffect(() =>{
         if(!isLoading && data[model]){
             setInitialColumnState(data[model], 'publish')
@@ -35,7 +35,10 @@ const CustomizeTable = ({isLoading, data, isError, model, tableColumn, actions}:
             <TableHeader>
                 <TableRow>
                 <TableHead>
-                    <Checkbox />
+                    <Checkbox 
+                        checked={checkAllState}
+                        onCheckedChange={handleCheckAllChange}
+                    />
                 </TableHead>
                 {tableColumn && tableColumn.map((item, index) => (
                     <TableHead key={index}>{item.name}</TableHead>
@@ -59,28 +62,24 @@ const CustomizeTable = ({isLoading, data, isError, model, tableColumn, actions}:
                     </TableRow>
                 )
                     : data[model] && data[model].map((record:any) =>(
-                    <TableRow key={record.id}>  
-                    <TableCell className="font-medium"><Checkbox /></TableCell>
-                        {tableColumn && tableColumn.map((item, index) => (
-                            <TableCell key={index} className="font-medium">{item.render(record)}</TableCell>
-                        ))}
-                    {/* <TableCell className="font-medium">{record.id}</TableCell>
-                    <TableCell>{record.name}</TableCell>
-                    <TableCell>{record.phone ?? '-'}</TableCell>
-                    <TableCell>{record.email}</TableCell>
-                    <TableCell>{record.address ?? '-'}</TableCell>
-                    <TableCell>Administrator</TableCell> */}
-                    <TableCell className="text-center">
-                        <Switch value={record.id} checked={columnState[record.id]?.publish} onCheckedChange={() => handleChecked(record.id, 'publish', model)} />
-                    </TableCell>
-                    <TableCell className="text-center flex justify-around">
-                        <Link to='/user/update' ></Link>
-                        {actions && actions.map((item, index) =>(
-                            <Link key={index} to={`${item.path}/${record.id}`} >{item.icon}</Link>
-                        ))
-                        }
-                        
-                    </TableCell>
+                    <TableRow key={record.id} className={checkState[record.id] ? 'bg-[#ffc]' : null}>  
+                        <TableCell className="font-medium">
+                            <Checkbox checked={checkState[record.id]} onCheckedChange={() => handleCheckChange(record.id)}/>
+                        </TableCell>
+                            {tableColumn && tableColumn.map((item, index) => (
+                                <TableCell key={index} className="font-medium">{item.render(record)}</TableCell>
+                            ))}
+                        <TableCell className="text-center">
+                            <Switch value={record.id} checked={columnState[record.id]?.publish} onCheckedChange={() => handleChecked(record.id, 'publish', model)} />
+                        </TableCell>
+                        <TableCell className="text-center flex justify-around">
+                            <Link to='/user/update' ></Link>
+                            {actions && actions.map((item, index) =>(
+                                <Link key={index} to={`${item.path}/${record.id}`} >{item.icon}</Link>
+                            ))
+                            }
+                            
+                        </TableCell>
                     </TableRow>    
                 ))}
                 
