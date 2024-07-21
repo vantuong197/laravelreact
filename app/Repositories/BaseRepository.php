@@ -24,4 +24,7 @@ class BaseRepository {
     public function findById($id, $column = ["*"], $relation = []){
         return $this->model->select($column)->with($relation)->findOrFail($id);
     }
+    public function deleteMultiple($selectedIds = []) {
+        return $this->model->whereIn('id', $selectedIds)->delete();
+    }
 }

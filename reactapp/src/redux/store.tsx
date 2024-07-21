@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import toastSlice from './slice/toastSlice'
 import authSlice from './slice/authSlice'
+import processingSlice from './slice/processingSlice'
 export const store = configureStore({
   reducer: {
     toast: toastSlice,
-    auth: authSlice
+    auth: authSlice,
+    processing: processingSlice
   },
 })
 

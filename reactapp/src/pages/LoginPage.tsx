@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { login } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
-import { SUCCESS } from "../configs/globalVariable";
+import { SUCCESS } from "@/configs/globalVariable";
 import { Button } from "../components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { useState } from "react";

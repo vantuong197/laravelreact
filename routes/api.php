@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Middleware\Jwt;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -28,6 +29,8 @@ Route::group([
 ], function ($router) {
     Route::get('users', [UserController::class, 'index']);
     Route::put('users/{id}/status', [UserController::class, 'updateStatusByField']);
+    Route::delete('records/delete/batch', [DashboardController::class, 'deleteBatch']);
+
 });
 
 Route::post('auth/login', [AuthController::class, 'login']);

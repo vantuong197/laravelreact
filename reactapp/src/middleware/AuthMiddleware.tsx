@@ -8,8 +8,6 @@ import { ERROR } from "../configs/globalVariable";
 import { getUser } from '../services/AuthService';
 import { setIsLogin } from '../redux/slice/authSlice';
 type ProtectedRouteProps = PropsWithChildren;
-
-
 const AuthMidleware = ({children}: ProtectedRouteProps) =>{
     const {isAuthenticated, user} = useSelector((state: RootState) => state.auth);
     const [checkAuth, setcheckAuth] = useState<boolean>(false);

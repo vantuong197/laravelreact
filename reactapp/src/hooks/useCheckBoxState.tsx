@@ -22,6 +22,8 @@ const useCheckBoxState = (data: any, model:string) =>{
         setCheckState(newCheckState)
         
     }
+
+    const getIsAnyCheck = () => Object.values(checkState).some(value => value)
     useEffect(() =>{
         if(data && data[model]){
             const initialCheckboxState = data[model].reduce((acc:any, item: any) =>{
@@ -35,7 +37,7 @@ const useCheckBoxState = (data: any, model:string) =>{
         
     }, [data])
 
-    return {checkState, checkAllState, handleCheckChange, handleCheckAllChange}
+    return {checkState, checkAllState, handleCheckChange, handleCheckAllChange, getIsAnyCheck}
 }
 
 

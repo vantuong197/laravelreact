@@ -11,8 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Link } from "react-router-dom";
 import { LoadingSpinner } from "./ui/loading";
 import { useEffect } from "react";
-import useColumnState from "../hooks/useColumnState";
-import useCheckBoxState from "../hooks/useCheckBoxState";
+import useColumnState from "@/hooks/useColumnState";
 interface CustomizeTableProps {
     data: unknown,
     isLoading: boolean,
@@ -20,15 +19,28 @@ interface CustomizeTableProps {
     model:string
     tableColumn: Array<{name:string; render: (item:any ) => JSX.Element}>
     actions: Array<{path:string; icon: any}>
+    checkState: {[key:number] : boolean}
+    checkAllState: boolean
+    handleCheckChange: (id:number) =>void
+    handleCheckAllChange: ()=> void
 }
-const CustomizeTable = ({isLoading, data, isError, model, tableColumn, actions}:CustomizeTableProps) =>{
+const CustomizeTable = ({
+    isLoading, 
+    data, 
+    isError, 
+    model, 
+    tableColumn, 
+    actions,
+    checkState,
+    checkAllState,
+    handleCheckChange,
+    handleCheckAllChange
+    }:CustomizeTableProps) =>{
     const { columnState, handleChecked, setInitialColumnState } = useColumnState();
-    const {handleCheckChange, checkAllState, checkState, handleCheckAllChange} = useCheckBoxState(data, model);
     useEffect(() =>{
         if(!isLoading && data[model]){
             setInitialColumnState(data[model], 'publish')
         }
-        
     }, [isLoading, data])
     return (
         <Table  className='border border-solid border-[#f3f3f3]'>

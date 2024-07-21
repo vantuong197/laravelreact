@@ -1,5 +1,5 @@
-import PageHeading from "../../../components/Breadcrumb";
-import { breadcrumbElement } from "../../../constant/breadcrumb";
+import PageHeading from "@/components/Breadcrumb";
+import { breadcrumbElement } from "@/constant/breadcrumb";
 import {
     Card,
     CardContent,
@@ -9,13 +9,15 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { pagination, model, tableColumn,actions } from "../../../services/UserService";
+import { pagination, model, tableColumn,actions } from "@/services/UserService";
 import { useQuery } from "react-query";
-import Paginate from "../../../components/Paginate";
+import Paginate from "@/components/Paginate";
 import { useEffect, useState } from "react";
-import CustomizeTable from "../../../components/CustomizeTable";
-import Filter from "../../../components/Filter";
-
+import CustomizeTable from "@/components/CustomizeTable";
+import Filter from "@/components/Filter";
+import useCheckBoxState from "@/hooks/useCheckBoxState";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 const UserPage: React.FC = () => {
     
     const navigate = useNavigate();
@@ -25,8 +27,10 @@ const UserPage: React.FC = () => {
     const {data, isLoading, isError, refetch} = useQuery(['users', page], () => pagination(page), {
         staleTime: 10000
     });
-
-
+    const {handleCheckChange, checkAllState, checkState, handleCheckAllChange, getIsAnyCheck} = useCheckBoxState(data, model);
+    const {isProcessing} = useSelector((state: RootState) => state.processing);
+    
+    const isAnyChecked = getIsAnyCheck();
     const handlePagechange = (page:number | null) =>{
         setPage(page);
         navigate(`?page=${page}`)
@@ -35,7 +39,7 @@ const UserPage: React.FC = () => {
     useEffect(() =>{
         setSearchParams({ page: currentPage.toString() })
         refetch()
-    }, [page, refetch])
+    }, [page, refetch, isProcessing])
     return (
         <>
             <PageHeading breadcrumbProps={breadcrumbElement.Users}/>
@@ -47,7 +51,11 @@ const UserPage: React.FC = () => {
                         <CardDescription className='text-xs text-[#f00000]'>Use the filter function to filter data</CardDescription>
                     </CardHeader>
                     <CardContent className='p-[15px]'>
-                        <Filter />
+                        <Filter 
+                            isAnyChecked={isAnyChecked} 
+                            checkState={checkState}
+                            model={model}
+                        />
                         <CustomizeTable 
                             isLoading={isLoading}
                             data={data}
@@ -55,6 +63,10 @@ const UserPage: React.FC = () => {
                             model={model}
                             tableColumn={tableColumn}
                             actions={actions}
+                            checkState={checkState}
+                            checkAllState={checkAllState}
+                            handleCheckChange={handleCheckChange}
+                            handleCheckAllChange={handleCheckAllChange}
                         />
                     </CardContent>
                     <CardFooter>
