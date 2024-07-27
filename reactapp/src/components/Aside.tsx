@@ -9,7 +9,7 @@ import {
   } from "@/components/ui/accordion"
 import { Link, useLocation } from 'react-router-dom';
 import { sidebarItems } from '../constant/sidebar';
-const Aside: React.FC = () =>{
+const Aside = (): React.ReactNode =>{
     const location = useLocation();
     const segment = location.pathname.split('/')[1];
     const getOpenAccordionValue = () =>{

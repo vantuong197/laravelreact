@@ -21,20 +21,21 @@ import { setToast } from "../redux/slice/toastSlice";
 import { SUCCESS } from "@/configs/globalVariable";
 import CustomizeAlertDialog from "./AlertDialog";
 import { useState } from "react";
-const Filter = ({isAnyChecked, checkState, model}:FilterProps) =>{
+const Filter = ({isAnyChecked, checkState, model}:FilterProps):React.ReactNode =>{
     const dispatch = useDispatch();
     const { actionSwitch } = useFilterActions();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedVal, setSelectedVal] = useState<string>('');
-    const doActionConfirm = async(value:string) =>{
+    const doActionConfirm = async(value:string): Promise<void> =>{
         const[action, selectedValue] = value.split("|");
         const response = await actionSwitch(action, selectedValue, checkState, model);
+        closeConfirmDialog();
+        console.log(response);
+        
         if(response && response.status === 200){
-            console.log(response);
-            closeConfirmDialog();
+            
             dispatch(setIsProcessing());
             dispatch(setToast({message: response.data.message, type: SUCCESS}))
-            
         }
         
     }

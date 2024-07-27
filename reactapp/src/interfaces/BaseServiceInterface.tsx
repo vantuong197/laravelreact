@@ -4,7 +4,7 @@ export interface CheckStateProps {
     [key: number]: boolean
 }
 
-export interface FilterProps extends CheckStateProps{
+export interface FilterProps{
     isAnyChecked: boolean
     checkState: {[key: number]: boolean}
     model:string

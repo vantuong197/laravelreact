@@ -14,8 +14,6 @@ export const processingSlice = createSlice({
     initialState,
     reducers:{
         setIsProcessing: (state) =>{
-            console.log('setIsProcessing');
-            
             state.isProcessing = !state.isProcessing;
         },
         setClearProcessing: (state) =>{

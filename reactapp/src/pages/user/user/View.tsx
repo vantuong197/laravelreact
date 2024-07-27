@@ -29,7 +29,6 @@ const UserPage: React.FC = () => {
     });
     const {handleCheckChange, checkAllState, checkState, handleCheckAllChange, getIsAnyCheck} = useCheckBoxState(data, model);
     const {isProcessing} = useSelector((state: RootState) => state.processing);
-    
     const isAnyChecked = getIsAnyCheck();
     const handlePagechange = (page:number | null) =>{
         setPage(page);
