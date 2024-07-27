@@ -19,26 +19,46 @@ import { useDispatch } from 'react-redux'
 import { setIsProcessing } from "@/redux/slice/processingSlice";
 import { setToast } from "../redux/slice/toastSlice";
 import { SUCCESS } from "@/configs/globalVariable";
+import CustomizeAlertDialog from "./AlertDialog";
+import { useState } from "react";
 const Filter = ({isAnyChecked, checkState, model}:FilterProps) =>{
     const dispatch = useDispatch();
-    const { actionSwitch} = useFilterActions();
-    const handleValueChange = async(value:string) =>{
+    const { actionSwitch } = useFilterActions();
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [selectedVal, setSelectedVal] = useState<string>('');
+    const doActionConfirm = async(value:string) =>{
         const[action, selectedValue] = value.split("|");
         const response = await actionSwitch(action, selectedValue, checkState, model);
         if(response && response.status === 200){
+            console.log(response);
+            closeConfirmDialog();
             dispatch(setIsProcessing());
-            dispatch(setToast({message: "Delete records successfully!", type: SUCCESS}))
+            dispatch(setToast({message: response.data.message, type: SUCCESS}))
+            
         }
         
+    }
+    const closeConfirmDialog = () =>{
+        setIsOpen(false);
+        setSelectedVal("");
+    }
+    const openConfirmDialog = (value: string) =>{
+        setIsOpen(true);
+        setSelectedVal(value);
     }
     return (
         <>
             <div className="mb-[15px]">
+                <CustomizeAlertDialog 
+                    isOpen={isOpen}
+                    closeDialog={closeConfirmDialog}
+                    confirmAction={() => doActionConfirm(selectedVal)}
+                />
                 <div className="flex justify-between items-center">
                     <div className="flex">
                         <div className="mr-[10px]">
                             {isAnyChecked && (
-                                <Select onValueChange={(value) => handleValueChange(value)}>
+                                <Select onValueChange={(value) => openConfirmDialog(value)}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="[Select actions]" />
                                 </SelectTrigger>

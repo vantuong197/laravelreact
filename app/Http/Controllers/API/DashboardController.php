@@ -29,9 +29,14 @@ class DashboardController extends Controller
             $repository = app("App\\Repositories\\{$folder}\\{$modelClass}Repository");
             $result = $repository->deleteMultiple($selectedIds);
             DB::commit();
+            $message = '';
+            if($result > 1){
+                $message = "Delete {$result} records successfully!";
+            }else{
+                $message = "Delete {$result} record successfully!";
+            }
             return response()->json([
-                'message' => 'Delete records successfully',
-                'deleteCount' => $result
+                'message' => $message
             ], Response::HTTP_OK);
 
         } catch (\Exception $th) {
