@@ -8,6 +8,7 @@ export interface FilterProps{
     isAnyChecked: boolean
     checkState: {[key: number]: boolean}
     model:string
+    handleQueryString: (value:string, field:string) =>void
 }
 
 export interface UpdateStatusByFieldParam {

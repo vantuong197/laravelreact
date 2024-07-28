@@ -8,7 +8,7 @@ import {
 import { TiDelete } from "react-icons/ti";
 import { FaCheck } from "react-icons/fa6";
 import { FaRedo } from "react-icons/fa";
-import { perpage } from "../constant/general";
+import { perpage, status } from "@/constant/general";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Link } from "react-router-dom";
@@ -17,20 +17,24 @@ import { FilterProps } from "@/interfaces/BaseServiceInterface";
 import useFilterActions from "@/hooks/useFilterActions";
 import { useDispatch } from 'react-redux'
 import { setIsProcessing } from "@/redux/slice/processingSlice";
-import { setToast } from "../redux/slice/toastSlice";
+import { setToast } from "@/redux/slice/toastSlice";
 import { SUCCESS } from "@/configs/globalVariable";
 import CustomizeAlertDialog from "./AlertDialog";
-import { useState } from "react";
-const Filter = ({isAnyChecked, checkState, model}:FilterProps):React.ReactNode =>{
+import {  useState } from "react";
+
+import useTable from "@/hooks/useTable";
+const Filter = ({isAnyChecked, checkState, model, handleQueryString}:FilterProps):React.ReactNode =>{
     const dispatch = useDispatch();
     const { actionSwitch } = useFilterActions();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedVal, setSelectedVal] = useState<string>('');
+    const { setDebounceSearchKeyword } = useTable();
+    
+    // const {debounce} = useDebounce();
     const doActionConfirm = async(value:string): Promise<void> =>{
         const[action, selectedValue] = value.split("|");
         const response = await actionSwitch(action, selectedValue, checkState, model);
         closeConfirmDialog();
-        console.log(response);
         
         if(response && response.status === 200){
             
@@ -39,6 +43,7 @@ const Filter = ({isAnyChecked, checkState, model}:FilterProps):React.ReactNode =
         }
         
     }
+    
     const closeConfirmDialog = () =>{
         setIsOpen(false);
         setSelectedVal("");
@@ -47,6 +52,8 @@ const Filter = ({isAnyChecked, checkState, model}:FilterProps):React.ReactNode =
         setIsOpen(true);
         setSelectedVal(value);
     }
+   
+    
     return (
         <>
             <div className="mb-[15px]">
@@ -85,7 +92,7 @@ const Filter = ({isAnyChecked, checkState, model}:FilterProps):React.ReactNode =
                             
                         </div>
                         <div className="mr-10">
-                            <Select>
+                            <Select onValueChange={(value) => handleQueryString(value, 'perpage')}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="[Select records]" />
                                 </SelectTrigger>
@@ -98,8 +105,26 @@ const Filter = ({isAnyChecked, checkState, model}:FilterProps):React.ReactNode =
                             </Select>
                         </div>
                         <div className="mr-10">
+                            <Select onValueChange={(value) => handleQueryString(value, 'publish')}>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="[Select status]" />
+                                </SelectTrigger>
+                                <SelectContent >
+                                    {status.map((item, index) => (
+                                        <SelectItem key={index} className="cursor-pointer" value={item.value}>{`${item.name}`}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="mr-10">
                             <div className="flex w-full max-w-sm items-center space-x-2">
-                                <Input type="email" placeholder="Enter your key words..." className='w-[250px] focus:outline-none'/>
+                                <Input 
+                                    type="email" 
+                                    placeholder="Enter your key words..." 
+                                    className='w-[250px] focus:outline-none'
+                                    onChange={(e) => setDebounceSearchKeyword(e.target.value, 'keyword')}
+                                />
                                 <Button type="submit" className='bg-[#04AA6D] hover:bg-[#04AA6D]'>Search</Button>    
                             </div>
                         </div>

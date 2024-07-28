@@ -5,4 +5,18 @@ const perpage = [
     '100',
 ]
 
-export {perpage}
+const status =[
+    {
+        name: 'All status',
+        value: '0'
+    },
+    {
+        name: 'Publish',
+        value: '2'
+    },
+    {
+        name: 'UnPublish',
+        value: '1'
+    }
+]
+export {perpage, status}

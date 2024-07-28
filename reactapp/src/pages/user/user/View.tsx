@@ -8,37 +8,16 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { pagination, model, tableColumn,actions } from "@/services/UserService";
-import { useQuery } from "react-query";
+import { model, tableColumn,actions } from "@/services/UserService";
 import Paginate from "@/components/Paginate";
-import { useEffect, useState } from "react";
 import CustomizeTable from "@/components/CustomizeTable";
 import Filter from "@/components/Filter";
 import useCheckBoxState from "@/hooks/useCheckBoxState";
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
+import useTable from "@/hooks/useTable";
 const UserPage: React.FC = () => {
-    
-    const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const currentPage = searchParams.get('page') ? parseInt(searchParams.get('page')!) : 1
-    const [page, setPage] = useState<number | null>(currentPage);
-    const {data, isLoading, isError, refetch} = useQuery(['users', page], () => pagination(page), {
-        staleTime: 10000
-    });
+    const {data, isLoading, isError,  handlePagechange, handleQueryString} = useTable();
     const {handleCheckChange, checkAllState, checkState, handleCheckAllChange, getIsAnyCheck} = useCheckBoxState(data, model);
-    const {isProcessing} = useSelector((state: RootState) => state.processing);
     const isAnyChecked = getIsAnyCheck();
-    const handlePagechange = (page:number | null) =>{
-        setPage(page);
-        navigate(`?page=${page}`)
-    }
-    
-    useEffect(() =>{
-        setSearchParams({ page: currentPage.toString() })
-        refetch()
-    }, [page, refetch, isProcessing])
     return (
         <>
             <PageHeading breadcrumbProps={breadcrumbElement.Users}/>
@@ -54,6 +33,7 @@ const UserPage: React.FC = () => {
                             isAnyChecked={isAnyChecked} 
                             checkState={checkState}
                             model={model}
+                            handleQueryString={handleQueryString}
                         />
                         <CustomizeTable 
                             isLoading={isLoading}

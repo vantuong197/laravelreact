@@ -82,7 +82,7 @@ const CustomizeTable = ({
                                 <TableCell key={index} className="font-medium">{item.render(record)}</TableCell>
                             ))}
                         <TableCell className="text-center">
-                            <Switch value={record.id} checked={columnState[record.id]?.publish} onCheckedChange={() => handleChecked(record.id, 'publish', model)} />
+                            <Switch value={record.id} checked={columnState[record.id]?.publish} onCheckedChange={() => handleChecked(record.id, 'publish', model)} className={columnState[record.id]?.publish ? "!bg-[#04AA6D]" : null}/>
                         </TableCell>
                         <TableCell className="text-center flex justify-around">
                             <Link to='/user/update' ></Link>

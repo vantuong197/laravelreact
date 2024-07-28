@@ -20,8 +20,10 @@ interface Users  {
     updated_at: string | null,
     ward_id: string | null,
 }
-const pagination = async (page: number | null):Promise<Users> =>{
-    const response = await axiosInstance.get(`/users?page=${page}`);
+const pagination = async (query: string):Promise<Users> =>{
+    
+    const response = await axiosInstance.get(`/users?${query}`);
+    
     return response.data;
 }
 
