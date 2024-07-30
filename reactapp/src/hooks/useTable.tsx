@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { pagination} from "@/services/UserService";
-import useDebounce from "@/hooks/useDebounce";
 const useTable = () =>{
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -13,7 +12,7 @@ const useTable = () =>{
     for (const [key, value] of queryParams.entries()) {
       queryObject[key] = value;
     }
-    const {debounce} = useDebounce();
+    
     const [filters, setFilters] = useState(queryObject);
     const [queryString, setQueryString] = useState<string>(() =>{
         const queryString = Object.keys(filters).filter(key => {
@@ -39,12 +38,7 @@ const useTable = () =>{
             [field]: value
         }))
     }
-    const setDebounceSearchKeyword = debounce((value:string, field:string)=>{
-        setFilters(prevVal => ({
-            ...prevVal,
-            [field]: value
-        }))
-    },400)
+    
     useEffect(() =>{
         const queryString = Object.keys(filters).filter(key => {
             const value = filters[key];
@@ -55,7 +49,7 @@ const useTable = () =>{
         setSearchParams(filters)
         refetch()
     }, [filters, refetch, isProcessing])
-    return {data, isLoading, isError, refetch, handlePagechange, handleQueryString, setFilters, filters, setDebounceSearchKeyword}
+    return {data, isLoading, isError, refetch, handlePagechange, handleQueryString, setFilters, filters}
 }
 
 export default useTable;

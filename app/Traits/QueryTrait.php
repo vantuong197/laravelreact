@@ -10,4 +10,19 @@ trait QueryTrait{
         }
         return $query;
     }
+
+    public function scopeKeyword($query, $keyword){
+        if(isset($keyword) && is_array($keyword) && count($keyword)){
+            if(!empty($keyword['search'])){
+                if(count($keyword['fields'])){
+                    foreach($keyword['fields'] as $val){
+                        $query->orWhere($val, 'LIKE', '%'.$keyword['search'].'%');
+                    }
+                }else{
+                    $query->where('name', 'LIKE', '%'.$keyword['search'].'%');
+                }
+            }
+        }
+        return $query;
+    }
 }

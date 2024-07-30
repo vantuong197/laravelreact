@@ -20,6 +20,10 @@ class UserService extends BaseService{
     private function paginateAgrument($request){
         $result = [
             'perpage' => $request->input('perpage') ?? 10,
+            'keyword' => [
+                'search' => $request->input('keyword') ?? '',
+                'fields' => ['name', 'email']
+            ],
             'select' => ['*'],
             'orderBy' => $request->input('sort') ? explode(',', $request->input('sort')) : ['id', 'desc']
         ];

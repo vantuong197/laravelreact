@@ -22,14 +22,13 @@ import { SUCCESS } from "@/configs/globalVariable";
 import CustomizeAlertDialog from "./AlertDialog";
 import {  useState } from "react";
 
-import useTable from "@/hooks/useTable";
+import useDebounce from "@/hooks/useDebounce";
 const Filter = ({isAnyChecked, checkState, model, handleQueryString}:FilterProps):React.ReactNode =>{
     const dispatch = useDispatch();
     const { actionSwitch } = useFilterActions();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedVal, setSelectedVal] = useState<string>('');
-    const { setDebounceSearchKeyword } = useTable();
-    
+    const {debounce} = useDebounce();
     // const {debounce} = useDebounce();
     const doActionConfirm = async(value:string): Promise<void> =>{
         const[action, selectedValue] = value.split("|");
@@ -43,7 +42,9 @@ const Filter = ({isAnyChecked, checkState, model, handleQueryString}:FilterProps
         }
         
     }
-    
+    const setDebounceSearchKeyword = debounce((value:string, field:string)=>{
+        handleQueryString(value, field)
+    },400)
     const closeConfirmDialog = () =>{
         setIsOpen(false);
         setSelectedVal("");

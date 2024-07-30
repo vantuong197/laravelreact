@@ -14,6 +14,7 @@ class BaseRepository {
         return $this->model
             ->select($params['select'])
             ->condition($params['condition'] ?? [])
+            ->keyword($params['keyword'])
             ->paginate($params['perpage']); 
     }
 
