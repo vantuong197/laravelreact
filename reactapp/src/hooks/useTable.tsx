@@ -32,10 +32,24 @@ const useTable = () =>{
         }))
     }
     const handleQueryString = (value: string, field: string) =>{
-        setFilters(prevVal => ({
-            ...prevVal,
-            [field]: value
-        }))
+        if(field === 'perpage'){
+            setFilters(prevVal => {
+
+                if(prevVal['page']){
+                    delete prevVal['page']
+                }
+                return ({
+                    ...prevVal,
+                    [field]: value
+                })
+            })
+        }else{
+            setFilters(prevVal => ({
+                ...prevVal,
+                [field]: value
+            }))
+        }
+        
     }
     
     useEffect(() =>{
