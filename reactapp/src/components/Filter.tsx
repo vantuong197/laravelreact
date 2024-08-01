@@ -23,13 +23,13 @@ import CustomizeAlertDialog from "./AlertDialog";
 import {  useState } from "react";
 
 import useDebounce from "@/hooks/useDebounce";
-const Filter = ({isAnyChecked, checkState, model, handleQueryString}:FilterProps):React.ReactNode =>{
+const Filter = ({isAnyChecked, checkState, model, handleQueryString, filters}:FilterProps):React.ReactNode =>{
     const dispatch = useDispatch();
     const { actionSwitch } = useFilterActions();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedVal, setSelectedVal] = useState<string>('');
     const {debounce} = useDebounce();
-    // const {debounce} = useDebounce();
+    
     const doActionConfirm = async(value:string): Promise<void> =>{
         const[action, selectedValue] = value.split("|");
         const response = await actionSwitch(action, selectedValue, checkState, model);
@@ -93,7 +93,7 @@ const Filter = ({isAnyChecked, checkState, model, handleQueryString}:FilterProps
                             
                         </div>
                         <div className="mr-10">
-                            <Select onValueChange={(value) => handleQueryString(value, 'perpage')}>
+                            <Select onValueChange={(value) => handleQueryString(value, 'perpage')} defaultValue={filters['perpage'] ? filters['perpage'] : '10'}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="[Select records]" />
                                 </SelectTrigger>
@@ -106,7 +106,7 @@ const Filter = ({isAnyChecked, checkState, model, handleQueryString}:FilterProps
                             </Select>
                         </div>
                         <div className="mr-10">
-                            <Select onValueChange={(value) => handleQueryString(value, 'publish')}>
+                            <Select onValueChange={(value) => handleQueryString(value, 'publish')} defaultValue={filters['publish']}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="[Select status]" />
                                 </SelectTrigger>

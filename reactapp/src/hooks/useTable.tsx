@@ -14,6 +14,7 @@ const useTable = () =>{
     }
     
     const [filters, setFilters] = useState(queryObject);
+    
     const [queryString, setQueryString] = useState<string>(() =>{
         const queryString = Object.keys(filters).filter(key => {
             const value = filters[key];
@@ -21,9 +22,7 @@ const useTable = () =>{
         }).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key])}`).join('&')
         return queryString
     });
-    const {data, isLoading, isError, refetch} = useQuery(['users', queryString], () => pagination(queryString), {
-        staleTime: 10000
-    });
+    const {data, isLoading, isError, refetch} = useQuery(['users', queryString], () => pagination(queryString));
     const {isProcessing} = useSelector((state: RootState) => state.processing);
     
     const handlePagechange = (page:number | null) =>{

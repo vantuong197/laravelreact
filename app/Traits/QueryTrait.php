@@ -15,9 +15,12 @@ trait QueryTrait{
         if(isset($keyword) && is_array($keyword) && count($keyword)){
             if(!empty($keyword['search'])){
                 if(count($keyword['fields'])){
-                    foreach($keyword['fields'] as $val){
-                        $query->orWhere($val, 'LIKE', '%'.$keyword['search'].'%');
-                    }
+                    $query->where(function($subQuery) use ($keyword){
+                        foreach($keyword['fields'] as $val){
+                            $subQuery->orWhere($val, 'LIKE', '%'.$keyword['search'].'%');
+                        }
+                    });
+                    
                 }else{
                     $query->where('name', 'LIKE', '%'.$keyword['search'].'%');
                 }

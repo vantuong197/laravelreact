@@ -15,7 +15,7 @@ import Filter from "@/components/Filter";
 import useCheckBoxState from "@/hooks/useCheckBoxState";
 import useTable from "@/hooks/useTable";
 const UserPage: React.FC = () => {
-    const {data, isLoading, isError,  handlePagechange, handleQueryString} = useTable();
+    const {data, isLoading, isError,  handlePagechange, handleQueryString, filters} = useTable();
     const {handleCheckChange, checkAllState, checkState, handleCheckAllChange, getIsAnyCheck} = useCheckBoxState(data, model);
     const isAnyChecked = getIsAnyCheck();
     return (
@@ -34,6 +34,7 @@ const UserPage: React.FC = () => {
                             checkState={checkState}
                             model={model}
                             handleQueryString={handleQueryString}
+                            filters={filters}
                         />
                         <CustomizeTable 
                             isLoading={isLoading}
