@@ -14,13 +14,18 @@ import CustomizeTable from "@/components/CustomizeTable";
 import Filter from "@/components/Filter";
 import useCheckBoxState from "@/hooks/useCheckBoxState";
 import useTable from "@/hooks/useTable";
+import UserInteractiveDialog from "@/components/UserInteractiveDialog";
+import useUserDialog from "@/hooks/useUserDialog";
+import UserCreate from "./Create";
 const UserPage: React.FC = () => {
     const {data, isLoading, isError,  handlePagechange, handleQueryString, filters} = useTable();
     const {handleCheckChange, checkAllState, checkState, handleCheckAllChange, getIsAnyCheck} = useCheckBoxState(data, model);
     const isAnyChecked = getIsAnyCheck();
+
+    const {isOpen, closeDialog, openDialog} = useUserDialog();
     return (
         <>
-            <PageHeading breadcrumbProps={breadcrumbElement.Users}/>
+            <PageHeading breadcrumbProps={breadcrumbElement.Users.index}/>
             
             <div className="main-content__container">
                 <Card className='rounded-[5px] mt-[15px]'>
@@ -35,6 +40,7 @@ const UserPage: React.FC = () => {
                             model={model}
                             handleQueryString={handleQueryString}
                             filters={filters}
+                            openDialog={openDialog}
                         />
                         <CustomizeTable 
                             isLoading={isLoading}
@@ -53,6 +59,14 @@ const UserPage: React.FC = () => {
                         {(!isLoading && data.links.length) ? <Paginate links={data.links} pageChange={handlePagechange}/> : null}
                     </CardFooter>
                 </Card>
+                <UserInteractiveDialog 
+                isOpen={isOpen}
+                title="test"
+                description="descript"
+                closeDialog={closeDialog}
+                >
+                    <UserCreate />
+                </UserInteractiveDialog>
             </div>
             
         </>

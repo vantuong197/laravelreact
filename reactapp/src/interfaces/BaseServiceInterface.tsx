@@ -9,7 +9,8 @@ export interface FilterProps{
     checkState: {[key: number]: boolean}
     model:string
     handleQueryString: (value:string, field:string) =>void
-    filters: any
+    filters: any,
+    openDialog: () => void
 }
 
 export interface UpdateStatusByFieldParam {

@@ -23,7 +23,7 @@ import CustomizeAlertDialog from "./AlertDialog";
 import {  useState } from "react";
 
 import useDebounce from "@/hooks/useDebounce";
-const Filter = ({isAnyChecked, checkState, model, handleQueryString, filters}:FilterProps):React.ReactNode =>{
+const Filter = ({isAnyChecked, checkState, model, handleQueryString, filters, openDialog}:FilterProps):React.ReactNode =>{
     const dispatch = useDispatch();
     const { actionSwitch } = useFilterActions();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -146,13 +146,13 @@ const Filter = ({isAnyChecked, checkState, model, handleQueryString, filters}:Fi
                             </div>
                         </div>
                     </div>
-                    <div className="flex border bg-[#04AA6D] text-white rounded-md">
-                        <Link to='/user/create' className="p-2">
+                    <div className="flex border  text-white rounded-md" onClick={openDialog}>
+                        <Button className="p-2 bg-[#04AA6D] hover:bg-[#04AA6D]">
                             <div className="flex flex-1 justify-start items-center text-[16px]">
                                 <FaPlusCircle className="mr-2"/>
                                 Create new user
                             </div>
-                        </Link>            
+                        </Button>            
                     </div>
 
                 </div>

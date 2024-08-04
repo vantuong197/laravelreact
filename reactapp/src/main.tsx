@@ -1,16 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import LoginPage from "./pages/LoginPage.tsx";
-import UserPage from "./pages/user/user/View.tsx";
-import DashboardPage from "./pages/DashboardPage.tsx";
+import LoginPage from "./pages/LoginPage";
+import UserPage from "./pages/user/user/View";
+import UserCreate from "./pages/user/user/Create";
+import DashboardPage from "./pages/DashboardPage";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { store } from './redux/store'
 import { Provider } from "react-redux";
-import Layout from "./components/Layout.tsx";
-import AuthMidleware from "./middleware/AuthMiddleware.tsx";
-import LoginMiddleware from "./middleware/LoginMiddleware.tsx";
+import Layout from "./components/Layout";
+import AuthMidleware from "./middleware/AuthMiddleware";
+import LoginMiddleware from "./middleware/LoginMiddleware";
 import {
     QueryClient,
     QueryClientProvider,
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
             {
                 path: '/user/index',
                 element: <UserPage />
+            },
+            {
+                path: '/user/create',
+                element: <UserCreate />
             }
         ]
     },
