@@ -23,7 +23,9 @@ interface Users  {
 const pagination = async (query: string):Promise<Users> =>{
     
     const response = await axiosInstance.get(`/users?${query}`);
-    
+    if(response.data.current_page > response.data.last_page){
+        response.data.links[1].active = true;
+    }
     return response.data;
 }
 

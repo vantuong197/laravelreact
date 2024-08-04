@@ -8,7 +8,7 @@ import {
 import { TiDelete } from "react-icons/ti";
 import { FaCheck } from "react-icons/fa6";
 import { FaRedo } from "react-icons/fa";
-import { perpage, status } from "@/constant/general";
+import { perpage, status, sort } from "@/constant/general";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Link } from "react-router-dom";
@@ -65,8 +65,9 @@ const Filter = ({isAnyChecked, checkState, model, handleQueryString, filters}:Fi
                 />
                 <div className="flex justify-between items-center">
                     <div className="flex">
-                        <div className="mr-[10px]">
-                            {isAnyChecked && (
+                    {isAnyChecked && (
+                        <div className="mr-10">
+                            
                                 <Select onValueChange={(value) => openConfirmDialog(value)}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="[Select actions]" />
@@ -89,9 +90,10 @@ const Filter = ({isAnyChecked, checkState, model, handleQueryString, filters}:Fi
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
-                            )}
+                            
                             
                         </div>
+                    )}
                         <div className="mr-10">
                             <Select onValueChange={(value) => handleQueryString(value, 'perpage')} defaultValue={filters['perpage'] ? filters['perpage'] : '10'}>
                                 <SelectTrigger className="w-[180px]">
@@ -112,6 +114,20 @@ const Filter = ({isAnyChecked, checkState, model, handleQueryString, filters}:Fi
                                 </SelectTrigger>
                                 <SelectContent >
                                     {status.map((item, index) => (
+                                        <SelectItem key={index} className="cursor-pointer" value={item.value}>{`${item.name}`}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="mr-10">
+                            <Select onValueChange={(value) => handleQueryString(value, 'sort')} defaultValue={filters['sort']}>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="[Sort records]" />
+                                </SelectTrigger>
+                                <SelectContent >
+                                    {sort.map((item, index) => (
                                         <SelectItem key={index} className="cursor-pointer" value={item.value}>{`${item.name}`}
                                         </SelectItem>
                                     ))}

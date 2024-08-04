@@ -19,4 +19,23 @@ const status =[
         value: '1'
     }
 ]
-export {perpage, status}
+
+const sort = [
+    {
+        value: 'id,desc',
+        name: 'Sort by newest records'
+    },
+    {
+        value: 'id,asc',
+        name: 'Sort by oldest records'
+    },
+    {
+        value: 'name,asc',
+        name: 'Sort by name A-Z'
+    },
+    {
+        value: 'name,desc',
+        name: 'Sort by name Z-A'
+    }
+]
+export {perpage, status, sort}

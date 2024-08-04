@@ -15,6 +15,7 @@ class BaseRepository {
             ->select($params['select'])
             ->condition($params['condition'] ?? [])
             ->keyword($params['keyword'])
+            ->orderBy($params['orderBy'][0], $params['orderBy'][1])
             ->paginate($params['perpage']); 
     }
 

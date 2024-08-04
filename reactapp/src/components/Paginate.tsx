@@ -19,6 +19,7 @@ interface PaginationProps {
 
 const Paginate:React.FC<PaginationProps> = ({links, pageChange}) =>{
     const activeLinkIndex = links.findIndex(link => link.active);
+    
     const filterLinks = links.filter((link, index) => (
         (index !== 0 && 
         index !== links.length - 1) && 
