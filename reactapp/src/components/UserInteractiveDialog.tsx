@@ -15,9 +15,10 @@ interface UserInteractiveDialogProps {
     closeDialog: () => void,
     description: string | null
     children: any
+    btnName: string
 }
 
-const UserInteractiveDialog  = ({isOpen, title, closeDialog, description, children}: UserInteractiveDialogProps) =>{
+const UserInteractiveDialog  = ({isOpen, title, closeDialog, description, children, btnName}: UserInteractiveDialogProps) =>{
   return (
     <Dialog open={isOpen} onOpenChange={closeDialog}>
         <DialogContent className="w-2/3 max-w-full">
@@ -29,7 +30,7 @@ const UserInteractiveDialog  = ({isOpen, title, closeDialog, description, childr
             </DialogHeader>
             {children}
             <DialogFooter>
-                <Button type="submit">Save changes</Button>
+                <Button type="submit">{btnName}</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>

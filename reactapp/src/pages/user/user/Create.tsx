@@ -1,6 +1,7 @@
 import CustomInput from "@/components/CustomizeInput";
-import { Input } from "@/components/ui/input";
+import CustomSelectBox from "@/components/CustomizeSelectbox";
 import { Label } from "@/components/ui/label";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Select from "react-select";
 const createUser = [
     {label: 'Name', id: 'fullname', type: 'text'},
@@ -8,14 +9,54 @@ const createUser = [
     {label: 'Password', id: 'password', type: 'password'},
     {label: 'Confirm password', id: 'confirm_password', type: 'password'},
     {label: 'BirthDay', id: 'birthday', type: 'date'},
+    {label: 'Avatar', id: 'imga', type: 'file'},
 
 ]
 
+const selectBox = [
+    {
+        title: "User group",
+        placeHolder: 'Select user group',
+        options: [
+            {value: 'value1', label: 'label1'},
+            {value: 'value2', label: 'label2'},
+            {value: 'value3', label: 'label3'},
+            {value: 'value4', label: 'label4'},
+        ]
+    },
+    {
+        title: "City",
+        placeHolder: 'Select City',
+        options: [
+            {value: 'value1', label: 'label1'},
+            {value: 'value2', label: 'label2'},
+            {value: 'value3', label: 'label3'},
+            {value: 'value4', label: 'label4'},
+        ]
+    },
+    {
+        title: "District",
+        placeHolder: 'Select District',
+        options: [
+            {value: 'value1', label: 'label1'},
+            {value: 'value2', label: 'label2'},
+            {value: 'value3', label: 'label3'},
+            {value: 'value4', label: 'label4'},
+        ]
+    },
+    {
+        title: "Ward",
+        placeHolder: 'Select Ward',
+        options: [
+            {value: 'value1', label: 'label1'},
+            {value: 'value2', label: 'label2'},
+            {value: 'value3', label: 'label3'},
+            {value: 'value4', label: 'label4'},
+        ]
+    }
+]
 const optionsSelect = [
-    {value: 'value1', label: 'label1'},
-    {value: 'value2', label: 'label2'},
-    {value: 'value3', label: 'label3'},
-    {value: 'value4', label: 'label4'},
+    
 ]
 const UserCreate = () => {
     return (
@@ -32,47 +73,25 @@ const UserCreate = () => {
                             />
                         )
                     })}
-                    <div className="grid grid-cols-4 items-center gap-4 m-2">
-                        <Label htmlFor='image' className="text-center">
-                            Avatar:
-                        </Label>
-                        <Input
-                            type='file'
-                            id='image'
-                            className="col-span-3"
-                        />
+                    <div className="text-center">
+                        <Avatar className="w-[100px] h-[100px] inline-block">
+                            <AvatarImage src="https://github.com/shadcn.png" />
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
                     </div>
                 </div>
+                
                 <div className="rightDiv w-1/2">
-                    
-                    <div className="grid grid-cols-4 items-center gap-4 m-2">
-                        <Label htmlFor='image' className="text-center">
-                            User group:
-                        </Label>
-                        <Select options={optionsSelect} className="w-full"/>
-                    </div>
-
-                    <div className="grid grid-cols-4 items-center gap-4 m-2">
-                        <Label htmlFor='image' className="text-center">
-                            City:
-                        </Label>
-                        <Select options={optionsSelect} className="w-full"/>
-                    </div>
-
-                    <div className="grid grid-cols-4 items-center gap-4 m-2">
-                        <Label htmlFor='image' className="text-center">
-                        District:
-                        </Label>
-                        <Select options={optionsSelect} className="w-full"/>
-                    </div>
-
-                    <div className="flex">
-                        <Label htmlFor='image' className="text-center">
-                        Ward:
-                        </Label>
-                        <Select options={optionsSelect} className="w-[500px]"/>
-                    </div>
-
+                    {selectBox.map((item, index) =>{
+                        return (
+                            <CustomSelectBox 
+                                label={item.title}
+                                placeHolder={item.placeHolder}
+                                optionsSelect={item.options}
+                                key={index}
+                            />
+                        )
+                    })}
                     <CustomInput 
                         label='Address'
                         id='address'

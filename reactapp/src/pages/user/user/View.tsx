@@ -64,6 +64,7 @@ const UserPage: React.FC = () => {
                 title="test"
                 description="descript"
                 closeDialog={closeDialog}
+                btnName='Create User'
                 >
                     <UserCreate />
                 </UserInteractiveDialog>

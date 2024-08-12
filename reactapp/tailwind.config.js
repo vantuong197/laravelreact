@@ -75,6 +75,9 @@ module.exports = {
       },
       fontSize:{
         "14px": "14px"
+      },
+      gridTemplateColumns: {
+        'colCustom' : '23% 74%'
       }
     },
   },

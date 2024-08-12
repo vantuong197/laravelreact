@@ -15,7 +15,7 @@ const CustomInput = ({label, id, type}: CustomInputProps) =>{
             <Input
                 type={type}
                 id={id}
-                className="col-span-3"
+                className="col-span-3 focus-visible:outline-none focus:border-blue-700"
             />
         </div>
     )
